@@ -50,14 +50,13 @@ public class MainActivity extends Activity
                 //here the messageReceived method is implemented
                 public void messageReceived(String message)
                 {
-                    //this method calls the onProgressUpdate
                     publishProgress(message, "");
                 }
 
                 @Override
                 public void error(String message)
                 {
-                    Toast.makeText(MainActivity.this, "Error :(", Toast.LENGTH_SHORT).show();
+                    publishProgress("error", message);
                 }
             }, ipToConnect, portToConnect);
 
@@ -69,6 +68,11 @@ public class MainActivity extends Activity
         protected void onProgressUpdate(String... values)
         {
             super.onProgressUpdate(values);
+
+            if (values[0].contains("error"))
+            {
+                Toast.makeText(MainActivity.this, values[1], Toast.LENGTH_SHORT).show();
+            }
             boton.setText("Hola c:");
         }
     }
